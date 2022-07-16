@@ -15,44 +15,48 @@ const Play = () => {
 
     const noteName = useMemo(()=>constants.notas[noteIndex].name, [noteIndex]);
 
-    const changeNote = useCallback(()=>{
-      console.log("Escrevendo")
-      console.log(bbt)
-      console.log(bbt.connection.connection.connected)
-
-      setNoteIndex((prevValue)=> {
-        if (prevValue === 14){
-          return 0;
-        }
-        return(prevValue + 1);
-      });
-    },[]);
+    const handleFindFrequency = useCallback(()=>{
+      try {
+        const data = axios.get('/note_analysis/1');
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    },[])
 
     useEffect(()=>{
-      
-      console.log(bbt)
-      console.log(bbt.connection.connection.connected)
+
+      bbt.subscribe({
+        channel: 'Afinadinho',
+        resource: 'frequencia',
+        read: true,
+        callback: (msg, err)=>{
+          if (!err){
+            console.log('Ouviu')
+
+            handleFindFrequency(msg.data);
+          }
+        }
+        });
 
       bbt.read({
         owner: 'rnagao',
         channel: 'Afinadinho',
-        resource: 'frequencia',
-        limit: 5,
-        callback: function(err, msg){
-          console.log(msg)
-        }
+        resource: 'frequencia'
+      }, (msg, err) => {
+        console.log(msg, err)
       });
 
       try {
         axios.post('/write_broker', {
-          resource: "analisar",
+          resource: "gravar",
           data: true
         })
       } catch (error) {
         console.log(error);
       }
 
-    },[])
+    },[handleFindFrequency])
 
 
     return (
@@ -61,7 +65,6 @@ const Play = () => {
             <img src={musical_score} alt='Nota' />
             <span className='subtitle'>{noteName}</span>
             <Button type="dashed" className="buttonStyled" style={{marginTop: '16px'}} onClick={play}> Ouvir</Button>
-            <Button type='primary' style={{marginTop: '16px'}} onClick={()=>{changeNote()}}>Mudar nota</Button>
         </Container>
     )
 }

@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import constants from '../../config/constants';
 
 export const Container = styled.div`
     display: flex;

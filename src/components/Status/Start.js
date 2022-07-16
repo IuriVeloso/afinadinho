@@ -7,8 +7,8 @@ const Start = ({ setStatus }) => {
     return (
             <Container> 
                 <span className='title'>Este é o</span> 
-                <span className='logo-title' style={{fontSize: '60px'}}>Afinadinho</span> 
-                <span className='title'>Clique abaixo para afinar!</span> 
+                <span className='logo-title' style={{fontSize: '60px', margin: '16px 0'}}>Afinadinho</span> 
+                <span className='title' style={{'textAlign': 'center'}}>Clique abaixo para começar!</span> 
                 <Button type='dashed' style={{marginTop: '16px'}} className='buttonStyled' onClick={()=>setStatus(2)}>Começar</Button>
             </Container>
         )
