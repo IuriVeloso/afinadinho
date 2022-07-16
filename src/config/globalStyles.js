@@ -33,6 +33,11 @@ const GlobalStyle = createGlobalStyle`
       font-size: 16px;
       font-family: 'Maitree', serif;
     }
+
+    .buttonStyled{
+      background: ${constants.colors['orange-1']} ;
+      font-weight: bold;
+    }
   }
 
 `

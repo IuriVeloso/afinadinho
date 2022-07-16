@@ -8,8 +8,8 @@ import 'antd/dist/antd.min.css'
 function App() {
   return (
     <>
-      <GlobalStyles />
       <Routes />
+      <GlobalStyles />
     </>
   );
 }

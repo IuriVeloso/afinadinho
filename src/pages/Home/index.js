@@ -1,39 +1,29 @@
-import React, { useCallback, useMemo, useState } from 'react';
-import useSound from 'use-sound';
-import { Button } from 'antd';
-
-import { SoundOutlined } from '@ant-design/icons';
-
-import constants from '../../config/constants.js';
-
-import musical_score from '../../assets/twemoji_musical-score.png';
+import React, { useMemo } from 'react';
 
 import { Container } from './styles';
+import Play from '../../components/Status/Play.js';
+import Start from '../../components/Status/Start.js';
+import Loading from '../../components/Status/Loading';
+import Genius from '../../components/Status/Genius';
 
+const Home = ({ status, setStatus }) => {
 
-const Home = () => {
-    const [noteIndex, setNoteIndex] = useState(0);
-    const [play] = useSound(constants.notas[noteIndex].file);
+    const component = useMemo(()=>{
+      switch(status){
+        case 0:
+          return <Loading />
+        case 1:
+          return <Start setStatus={setStatus} />
+        case 2: 
+          return <Play />
+        case 3:
+          return <Genius />
+        default:
+          return <div>Error</div>
+      }
+    }, [status, setStatus])
 
-    const noteName = useMemo(()=>constants.notas[noteIndex].name, [noteIndex])
-
-    const changeNote = useCallback(()=>{
-      setNoteIndex((prevValue)=> {
-        if (prevValue === 14){
-          return 0;
-        }
-        return(prevValue + 1);
-      });
-    },[])
-
-  return <Container>
-            <span className='title'>Tente cantar esta nota!</span>
-            <img src={musical_score} alt='Nota' />
-            <span className='subtitle'>{noteName}</span>
-            <Button icon={<SoundOutlined />} shape='circle' type='primary' style={{marginTop: '16px'}} onClick={play}></Button>
-            <Button type='primary' style={{marginTop: '16px'}} onClick={changeNote}>Mudar nota</Button>
-
-        </Container>;
+  return (<Container>{component}</Container>);
 }
 
 export default Home;

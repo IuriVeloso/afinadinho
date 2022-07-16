@@ -12,12 +12,4 @@ export const Container = styled.div`
         margin: 24px 0;
     }
 
-    .title{
-        color: ${constants.colors['orange+2']};
-        margin-top: 64px;
-    }
-
-    .subtitle{
-
-    }
 `

@@ -14,8 +14,8 @@ const Routes = () => {
   return (
     <Router>
         <Switch>
-            <Route path="/" element={<Base><Home text='home aqui'/></Base>} />
-            <Route path='about' element={<Home text='aaa aqui'/>} />
+            <Route path="/" element={<Base><Home /></Base>} />
+            <Route path='/about' element={<Home />} />
         </Switch>
     </Router>);
 }
