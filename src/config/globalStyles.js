@@ -22,11 +22,13 @@ const GlobalStyle = createGlobalStyle`
     .title{
       font-size: 25px;
       font-family: 'IBM Plex Sans Thai Looped', sans-serif;
+      text-align: center;
     }
 
     .subtitle{
       font-size: 20px;
       font-family: 'Josefin Sans', sans-serif;
+      text-align: center;
     }
 
     .text{
@@ -37,6 +39,11 @@ const GlobalStyle = createGlobalStyle`
     .buttonStyled{
       background: ${constants.colors['orange-1']} ;
       font-weight: bold;
+      :focus{
+        background: ${constants.colors['orange-1']} ;
+        font-weight: bold;
+        color: rgba(0,0,0,.85);
+      }
     }
   }
 

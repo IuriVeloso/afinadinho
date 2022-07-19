@@ -15,7 +15,6 @@ const Routes = () => {
     <Router>
         <Switch>
             <Route path="/" element={<Base><Home /></Base>} />
-            <Route path='/about' element={<Home />} />
         </Switch>
     </Router>);
 }

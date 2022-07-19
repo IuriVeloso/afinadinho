@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import Footer from '../Footer';
 import Header from '../Header';
@@ -14,14 +14,10 @@ const Base = ({ children }) => {
 
   const [status, setStatus] = useState(States.LOADING);
 
-  useEffect(()=>{
-    setTimeout(()=>setStatus(States.HOME), 1000)
-  } , [])
-
   return <>
     <Header />
       {React.cloneElement(children, { status: status, setStatus: setStatus })}
-    <Footer changeStatus={() => setStatus(States.GENIUS)} />
+    <Footer status={status} changeStatus={setStatus} />
     </>;
 }
 
