@@ -87,7 +87,8 @@ const Play = ({ musicList, randIndex, setRandIndex }) => {
 
     const resultComponent = useMemo(()=>(result &&
       <>
-        <span className='subtitle'>A frequencia lida foi de: {result.frequencia_lida.toFixed(2)} Hz</span>
+        <span className='subtitle'>A frequencia lida foi de: {result.frequencia_lida.toFixed(1)} Hz</span>
+        <br/>
         <span className='subtitle'>A frequencia certa era em torno de: {result.frequencia_natural_nota} Hz</span>
       </>), [result])
 
