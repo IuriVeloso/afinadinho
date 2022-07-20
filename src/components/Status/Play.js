@@ -19,6 +19,8 @@ const statusList = {
 const Play = ({ musicList, randIndex, setRandIndex }) => {
     const [status, setStatus] = useState(statusList.LISTENING);
 
+    const [result, setResult] = useState();
+
     const [play] = useSound(musicList[randIndex].file);
 
     const noteName = useMemo(()=>musicList[randIndex].name,  [ randIndex, musicList ]);
@@ -30,10 +32,11 @@ const Play = ({ musicList, randIndex, setRandIndex }) => {
 
     const handleFindFrequency = useCallback(()=>{
         axios.get(`/note_analysis`).then(({ data })=>{
+          setResult(data);
           if ( data.afinado ) {
-            setStatus(statusList.SUCCESS)
+            setStatus(statusList.SUCCESS);
           } else {
-            setStatus(statusList.ERROR)
+            setStatus(statusList.ERROR);
           }
         }, (err)=>{
           console.log(err);
@@ -49,6 +52,7 @@ const Play = ({ musicList, randIndex, setRandIndex }) => {
     },[]);
 
     useEffect(()=>{
+      setResult();
       bbt.subscribe({
         channel: 'Afinadinho',
         resource: 'analisar',
@@ -81,6 +85,12 @@ const Play = ({ musicList, randIndex, setRandIndex }) => {
 
     },[handleFindFrequency, musicList, randIndex])
 
+    const resultComponent = useMemo(()=>(result &&
+      <>
+        <span className='subtitle'>A frequencia lida foi de: {result.frequencia_lida.toFixed(2)} Hz</span>
+        <span className='subtitle'>A frequencia certa era em torno de: {result.frequencia_natural_nota} Hz</span>
+      </>), [result])
+
     const content = useMemo(()=>{
       switch(status){
         case statusList.LISTENING:
@@ -102,6 +112,7 @@ const Play = ({ musicList, randIndex, setRandIndex }) => {
             <>
               <span className='title'>Parábens, você acertou!</span>
               <CheckCircleOutlined style={{fontSize: '128px', margin: '12px 0', color: constants.colors['orange+2']}} />
+              {resultComponent}
               <Button 
                 type="dashed" 
                 className="buttonStyled" 
@@ -113,6 +124,7 @@ const Play = ({ musicList, randIndex, setRandIndex }) => {
             <>
               <span className='title'>Não é esta a nota!</span>
               <CloseCircleOutlined style={{fontSize: '128px', margin: '12px 0', color: constants.colors['orange+2']}} />
+              {resultComponent}
               <Button 
                 type="dashed" 
                 className="buttonStyled" 
@@ -132,7 +144,7 @@ const Play = ({ musicList, randIndex, setRandIndex }) => {
                 onClick={play}> Ouvir</Button>
             </>)
       }
-    },[status, noteName, play, randomize])
+    },[status, noteName, resultComponent, play, randomize])
 
 
     return (

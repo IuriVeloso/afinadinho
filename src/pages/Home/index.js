@@ -35,16 +35,10 @@ const Home = ({ status, setStatus }) => {
       setRandIndex(rand);
       setMusicList(finalList);
 
-      console.log(rand, finalList);
-
       setStatus(1);
 
     })
   } , [setStatus])
-
-  useEffect(()=>{
-    console.log('efeito de antes', randIndex);
-  }, [randIndex])
 
     const component = useMemo(()=>{
       switch(status){
